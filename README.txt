@@ -6,3 +6,4 @@ Future improvements:
 - Radio buttons to round up to nearest dollar on tip amount or total bill
 - Integrate with venmo?
 - Ads on the bottom
+- Add button to turn on flashlight to see in dark places

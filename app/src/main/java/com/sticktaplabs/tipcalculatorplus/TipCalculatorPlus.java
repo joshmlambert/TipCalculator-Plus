@@ -7,6 +7,8 @@ import android.text.TextWatcher;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.EditText;
+import android.widget.SeekBar;
+import android.widget.SeekBar.OnSeekBarChangeListener;
 
 
 public class TipCalculatorPlus extends Activity {
@@ -16,15 +18,19 @@ public class TipCalculatorPlus extends Activity {
     private static final String TIP_AMOUNT = "TIP_AMOUNT";
     private static final String BILL_WITHOUT_TIP = "BILL_WITHOUT_TIP";
 
+    private static final int SEEK_BAR_MULTIPLE = 3;
+
     private double billBeforeTip;
     private double tipPercent;
     private double tipAmount;
     private double finalBill;
 
-    EditText billBeforeTipET;
-    EditText tipPercentET;
-    EditText tipAmountET;
-    EditText finalBillET;
+    private EditText billBeforeTipET;
+    private EditText tipPercentET;
+    private EditText tipAmountET;
+    private EditText finalBillET;
+
+    private SeekBar tipChangeSeekBar;
 
 
     @Override
@@ -79,9 +85,9 @@ public class TipCalculatorPlus extends Activity {
 
         tipPercentET.addTextChangedListener(new TextWatcher() {
             @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+            @Override
+            public void afterTextChanged(Editable s) {}
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
@@ -93,13 +99,27 @@ public class TipCalculatorPlus extends Activity {
 
                 updateTipAndFinalBill();
             }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-
-            }
         });
 
+
+        //init seek bar
+        tipChangeSeekBar = (SeekBar) findViewById(R.id.changeTipSeekBar);
+
+        tipChangeSeekBar.setOnSeekBarChangeListener(new OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                tipPercent = (progress / SEEK_BAR_MULTIPLE)*.01 ;
+                tipPercentET.setText(String.format("%.02f", tipPercent));
+
+                updateTipAndFinalBill();
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {}
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {}
+        });
     }
 
     private void updateTipAndFinalBill() {

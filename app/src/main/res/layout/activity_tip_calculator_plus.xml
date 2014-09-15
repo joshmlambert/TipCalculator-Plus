@@ -22,14 +22,14 @@
 
     <EditText
         android:id="@+id/billEditText"
-        android:text="@string/bill_edit_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_toEndOf="@+id/billTextView"
         android:layout_marginLeft="2dp"
         android:layout_alignBottom="@+id/billTextView"
         android:inputType="numberDecimal"
-        android:ems="5" />
+        android:ems="5"
+        android:hint="@string/bill_edit_text" />
 
     <TextView
         android:id="@+id/tipTextView"
@@ -93,5 +93,14 @@
         android:text="@string/tip_amount_edit_text"
         android:inputType="numberDecimal"
         android:ems="5" />
+
+    <SeekBar
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/changeTipSeekBar"
+        android:layout_below="@+id/tipEditText"
+        android:layout_alignStart="@+id/tipTextView"
+        android:layout_alignParentEnd="true"
+        android:progress="54" />
 
 </RelativeLayout>
