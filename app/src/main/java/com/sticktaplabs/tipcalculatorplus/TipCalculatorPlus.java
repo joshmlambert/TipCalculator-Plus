@@ -1,14 +1,19 @@
 package com.sticktaplabs.tipcalculatorplus;
 
 import android.app.Activity;
+import android.content.pm.PackageManager;
+import android.hardware.Camera;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.SeekBar;
 import android.widget.SeekBar.OnSeekBarChangeListener;
+import android.widget.Switch;
 
 
 public class TipCalculatorPlus extends Activity {
@@ -31,6 +36,14 @@ public class TipCalculatorPlus extends Activity {
     private EditText finalBillET;
 
     private SeekBar tipChangeSeekBar;
+
+    private CheckBox roundTipUpCB;
+    private CheckBox roundBillUpCB;
+
+    private Switch flashlightSwitch;
+    private static Camera cam = null;
+
+    //private AdView mAdView;
 
 
     @Override
@@ -120,13 +133,78 @@ public class TipCalculatorPlus extends Activity {
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {}
         });
+
+
+        //init checkboxes
+        roundTipUpCB = (CheckBox) findViewById(R.id.roundTipCheckBox);
+        roundBillUpCB = (CheckBox) findViewById(R.id.roundBillCheckBox);
+
+        roundTipUpCB.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if(isChecked) {
+                    //uncheck the other box
+                    roundBillUpCB.setChecked(false);
+                }
+                updateTipAndFinalBill();
+            }
+        });
+
+        roundBillUpCB.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if(isChecked) {
+                    //uncheck the other box
+                    roundTipUpCB.setChecked(false);
+                }
+                updateTipAndFinalBill();
+            }
+        });
+
+
+        flashlightSwitch = (Switch) findViewById(R.id.flashlightSwitch);
+        flashlightSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked) {
+                    //check if flash is available
+                    if (getPackageManager().hasSystemFeature(PackageManager.FEATURE_CAMERA_FLASH)) {
+                        //TODO turn on flashlight
+                        cam = Camera.open();
+                        Camera.Parameters p = cam.getParameters();
+                        p.setFlashMode(Camera.Parameters.FLASH_MODE_TORCH);
+                        cam.setParameters(p);
+                        cam.startPreview();
+                    } else {
+                        flashlightSwitch.setChecked(false);
+                    }
+                } else {
+                    //turn off
+                    cam.stopPreview();
+                    cam.release();
+                }
+            }
+        });
+
     }
 
     private void updateTipAndFinalBill() {
-        double finalBill = billBeforeTip + (billBeforeTip * tipPercent);
-        finalBillET.setText(String.format("%.02f", finalBill));
 
+        double roundingAmount = 0;
+
+        double finalBill = billBeforeTip + (billBeforeTip * tipPercent);
         double tipAmount = billBeforeTip * tipPercent;
+
+        if (roundBillUpCB.isChecked()) {
+            roundingAmount = 1 - (finalBill % 1.0);
+        } else if (roundTipUpCB.isChecked()) {
+            roundingAmount = 1 - (tipAmount % 1.0);
+        }
+
+        finalBill += roundingAmount;
+        tipAmount += roundingAmount;
+
+        finalBillET.setText(String.format("%.02f", finalBill));
         tipAmountET.setText(String.format("%.02f", tipAmount));
     }
 

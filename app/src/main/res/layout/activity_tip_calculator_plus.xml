@@ -13,19 +13,17 @@
         android:text="@string/bill_text_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginLeft="40dp"
         android:layout_marginTop="30dp"
-        android:textSize="25dp"
-        android:textIsSelectable="false" />
+        android:textSize="25sp"
+        android:textIsSelectable="false"
+        android:layout_alignParentTop="true" />
 
     <EditText
         android:id="@+id/billEditText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_toEndOf="@+id/billTextView"
-        android:layout_marginLeft="2dp"
+        android:layout_marginStart="2dp"
         android:layout_alignBottom="@+id/billTextView"
         android:inputType="numberDecimal"
         android:ems="5"
@@ -36,10 +34,10 @@
         android:text="@string/tip_text_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="25dp"
+        android:textSize="25sp"
         android:layout_alignTop="@+id/billTextView"
         android:layout_toEndOf="@+id/billEditText"
-        android:layout_marginLeft="15dp" />
+        android:layout_marginStart="15dp" />
 
     <EditText
         android:layout_width="wrap_content"
@@ -47,7 +45,7 @@
         android:id="@+id/tipEditText"
         android:layout_alignTop="@+id/billEditText"
         android:layout_toEndOf="@+id/tipTextView"
-        android:layout_marginLeft="2dp"
+        android:layout_marginStart="2dp"
         android:text="@string/tip_edit_text"
         android:inputType="numberDecimal"
         android:ems="3" />
@@ -57,9 +55,9 @@
         android:layout_height="wrap_content"
         android:text="@string/final_bill_text_view"
         android:id="@+id/finalBillTextView"
-        android:layout_marginTop="97dp"
+        android:layout_marginTop="95dp"
         android:textIsSelectable="true"
-        android:textSize="25dp"
+        android:textSize="25sp"
         android:layout_below="@+id/billEditText"
         android:layout_alignStart="@+id/billTextView" />
 
@@ -71,7 +69,7 @@
         android:text="@string/final_bill_edit_text"
         android:layout_alignBottom="@+id/finalBillTextView"
         android:inputType="numberDecimal"
-        android:layout_marginLeft="10dp"
+        android:layout_marginStart="10dp"
         android:ems="5" />
 
     <TextView
@@ -81,7 +79,7 @@
         android:id="@+id/tipAmountTextView"
         android:layout_above="@+id/finalBillEditText"
         android:layout_alignStart="@+id/finalBillTextView"
-        android:textSize="25dp"
+        android:textSize="25sp"
         android:textIsSelectable="false" />
 
     <EditText
@@ -102,5 +100,44 @@
         android:layout_alignStart="@+id/tipTextView"
         android:layout_alignParentEnd="true"
         android:progress="54" />
+
+    <CheckBox
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/round_tip"
+        android:id="@+id/roundTipCheckBox"
+        android:layout_alignBottom="@+id/tipAmountEditText"
+        android:layout_toEndOf="@+id/tipAmountEditText"
+        android:textSize="16sp" />
+
+    <CheckBox
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/round_bill"
+        android:id="@+id/roundBillCheckBox"
+        android:layout_alignBottom="@+id/finalBillEditText"
+        android:layout_toEndOf="@+id/finalBillEditText"
+        android:textSize="16sp" />
+
+    <Switch
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/flashlight"
+        android:id="@+id/flashlightSwitch"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true"
+        android:textSize="25sp" />
+
+
+
+   <!-- <com.google.android.gms.ads.AdView
+        android:id="@+id/adView"
+        android:layout_width="fill_parent"
+        android:layout_height="100dp"
+        android:layout_alignParentBottom="true"
+        ads:adSize="BANNER"
+        ads:adUnitId="@string/banner_ad_unit_id"
+        />-->
+
 
 </RelativeLayout>
