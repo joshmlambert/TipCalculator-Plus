@@ -201,8 +201,10 @@ public class TipCalculatorPlus extends Activity {
             roundingAmount = 1 - (tipAmount % 1.0);
         }
 
-        finalBill += roundingAmount;
-        tipAmount += roundingAmount;
+        if (roundingAmount != 1.) {
+            finalBill += roundingAmount;
+            tipAmount += roundingAmount;
+        }
 
         finalBillET.setText(String.format("%.02f", finalBill));
         tipAmountET.setText(String.format("%.02f", tipAmount));
